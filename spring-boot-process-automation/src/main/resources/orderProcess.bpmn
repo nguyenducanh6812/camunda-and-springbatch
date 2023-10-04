@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.4.2">
+  <bpmn:process id="Process_OrderProcess" name="Order Process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_14bdz4q</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_14bdz4q" sourceRef="StartEvent_1" targetRef="Activity_0w0o1nv" />
+    <bpmn:endEvent id="EndEvent_1y4bj2w">
+      <bpmn:incoming>Flow_0ey53vi</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0d726xt" sourceRef="ServiceTask_1tvk8uj" targetRef="UserTask_0eay4mh" />
+    <bpmn:sequenceFlow id="SequenceFlow_1s49wir" sourceRef="UserTask_0eay4mh" targetRef="Activity_0xkajuq" />
+    <bpmn:userTask id="UserTask_0eay4mh" name="Approve Order">
+      <bpmn:incoming>SequenceFlow_0d726xt</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1s49wir</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="ServiceTask_1tvk8uj" name="Calculate Order Amount" camunda:delegateExpression="${calculateOrderAmountService}">
+      <bpmn:incoming>Flow_0bseh10</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0d726xt</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_0xkajuq" name="Check Order" camunda:delegateExpression="${checkOrderService}">
+      <bpmn:incoming>SequenceFlow_1s49wir</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ey53vi</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0ey53vi" sourceRef="Activity_0xkajuq" targetRef="EndEvent_1y4bj2w" />
+    <bpmn:sequenceFlow id="Flow_0bseh10" sourceRef="Activity_0p3804s" targetRef="ServiceTask_1tvk8uj" />
+    <bpmn:userTask id="Activity_0p3804s" name="Review Order Infor">
+      <bpmn:incoming>Flow_1hvskkc</bpmn:incoming>
+      <bpmn:outgoing>Flow_0bseh10</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1hvskkc" sourceRef="Activity_0w0o1nv" targetRef="Activity_0p3804s" />
+    <bpmn:serviceTask id="Activity_0w0o1nv" name="Retrieve Order Information" camunda:class="com.upwork.camunda.workflow.task.RetrieveOrderInformationService">
+      <bpmn:incoming>SequenceFlow_14bdz4q</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hvskkc</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_OrderProcess">
+      <bpmndi:BPMNShape id="EndEvent_1y4bj2w_di" bpmnElement="EndEvent_1y4bj2w">
+        <dc:Bounds x="1102" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="606" y="138" width="75" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0eay4mh_di" bpmnElement="UserTask_0eay4mh">
+        <dc:Bounds x="760" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1tvk8uj_di" bpmnElement="ServiceTask_1tvk8uj">
+        <dc:Bounds x="595" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0xw7t1o" bpmnElement="Activity_0xkajuq">
+        <dc:Bounds x="920" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xvq2a9_di" bpmnElement="Activity_0p3804s">
+        <dc:Bounds x="430" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="156" y="138" width="70" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02y4y1v_di" bpmnElement="Activity_0w0o1nv">
+        <dc:Bounds x="250" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_14bdz4q_di" bpmnElement="SequenceFlow_14bdz4q">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="250" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="197" y="95" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0d726xt_di" bpmnElement="SequenceFlow_0d726xt">
+        <di:waypoint x="695" y="120" />
+        <di:waypoint x="760" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="366" y="95" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1s49wir_di" bpmnElement="SequenceFlow_1s49wir">
+        <di:waypoint x="860" y="120" />
+        <di:waypoint x="920" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="544" y="95" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ey53vi_di" bpmnElement="Flow_0ey53vi">
+        <di:waypoint x="1020" y="120" />
+        <di:waypoint x="1102" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bseh10_di" bpmnElement="Flow_0bseh10">
+        <di:waypoint x="530" y="120" />
+        <di:waypoint x="595" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hvskkc_di" bpmnElement="Flow_1hvskkc">
+        <di:waypoint x="350" y="120" />
+        <di:waypoint x="430" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
